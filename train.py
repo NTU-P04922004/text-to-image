@@ -143,7 +143,8 @@ def load_training_data(data_dir, data_set):
 			flower_captions[ds[0]] = np.array(ds[1])
 		image_list = [key for key in flower_captions]
 		image_list.sort()
-
+		
+		# use 75% of images for training
 		img_75 = int(len(image_list)*0.75)
 		training_image_list = image_list[0:img_75]
 		random.shuffle(training_image_list)
