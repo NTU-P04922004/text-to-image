@@ -87,9 +87,15 @@ def main():
 	
 	loaded_data = load_training_data(args.data_dir, args.data_set)
 	
+	# Per training epoch
+	#
 	for i in range(args.epochs):
+		# Training for args.batch_size times
+		#
 		batch_no = 0
 		while batch_no*args.batch_size < loaded_data['data_length']:
+			# For each iteration, generate a batch
+			#
 			real_images, wrong_images, caption_vectors, z_noise, image_files = get_training_batch(batch_no, args.batch_size, 
 				args.image_size, args.z_dim, args.caption_vector_length, 'train', args.data_dir, args.data_set, loaded_data)
 			
@@ -140,8 +146,8 @@ def load_training_data(data_dir, data_set):
 		h = h5py.File(join(data_dir, 'flower_tv.hdf5'))
 		flower_captions = {}
 		for ds in h.iteritems():
-            # ds[0]: image name
-            # Is ds[1] an array of captions?
+            		# ds[0]: image name
+            		# Is ds[1] an array of captions?
 			flower_captions[ds[0]] = np.array(ds[1])
 		image_list = [key for key in flower_captions]
 		image_list.sort()
@@ -180,6 +186,7 @@ def save_for_vis(data_dir, real_images, generated_images, image_files):
 
 def get_training_batch(batch_no, batch_size, image_size, z_dim, 
 	caption_vector_length, split, data_dir, data_set, loaded_data = None):
+	"""
 	if data_set == 'mscoco':
 		with h5py.File( join(data_dir, 'tvs/'+split + '_tvs_' + str(batch_no))) as hf:
 			caption_vectors = np.array(hf.get('tv'))
@@ -209,7 +216,7 @@ def get_training_batch(batch_no, batch_size, image_size, z_dim,
 
 
 		return real_images, wrong_images, caption_vectors, z_noise, image_files
-
+	"""
 	if data_set == 'flowers':
 		real_images = np.zeros((batch_size, 64, 64, 3))
 		wrong_images = np.zeros((batch_size, 64, 64, 3))
